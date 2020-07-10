@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ClassLibraryLogging;
 using Manage.Job.Models;
 using Manage.Job.Utilities;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -12,11 +13,28 @@ using Microsoft.Extensions.Configuration;
 
 namespace Manage.Job.Controllers
 {
+    // TO AVOID CORS:
+    // Access to XMLHttpRequest at 'https://localhost:44308/api/movies' from origin 'http://localhost:44301' has been blocked by CORS policy: 
+    // Response to preflight request doesn't pass access control check: No 'Access - Control - Allow - Origin' header is present on the requested resource.
+
+    // Se lo metto a livello dell'intero Controller
+    // [EnableCors("AllowAllHeaders")]    VA IN ERRORE
+
     [Route("api/[controller]")]
     [ApiController]
     public class SPReferenteController : ControllerBase
     {
         protected SPHelper oSP = null;
+
+        // https://github.com/dotnet/aspnetcore/issues/17830
+        // InvalidOperationException: Endpoint Manage.Job.Controllers.SPReferenteController.Get (Manage.Job) contains CORS metadata, 
+        // but a middleware was not found that supports CORS.
+        // Configure your application startup by adding app.UseCors() inside the call to Configure(..) in the application startup code.
+        // The call to app.UseAuthorization() must appear between app.UseRouting() and app.UseEndpoints(...).
+        // Microsoft.AspNetCore.Routing.EndpointMiddleware.ThrowMissingCorsMiddlewareException(Endpoint endpoint)
+
+        // TOLTO
+        // [EnableCors("AllowAllHeaders")]
 
         // GET: api/SPReferente
         [HttpGet]

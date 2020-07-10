@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibraryLogging\ClassLibraryLogging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Client.Policy.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.Office.Client.Policy.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Client.TranslationServices.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.Office.Client.TranslationServices.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.ProjectServer.Client.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.ProjectServer.Client.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.DocumentManagement.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.DocumentManagement.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Sharepoint.Client.Publishing.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Publishing.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Runtime.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime.WindowsStore">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Runtime.WindowsStore.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Search.Applications.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Search.Applications.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Search.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Search.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Taxonomy.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.Taxonomy.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.UserProfiles.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.UserProfiles.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.WorkflowServices.Portable">
+      <HintPath>C:\Users\Patrizio\.nuget\packages\microsoft.sharepointonline.csom\16.1.20211.12000\lib\netcore45\Microsoft.SharePoint.Client.WorkflowServices.Portable.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>

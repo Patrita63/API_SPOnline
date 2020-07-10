@@ -24,6 +24,8 @@ namespace Manage.Job.Utilities
 {
     public class SPHelper
     {
+        private const string PassPhrase = "c8e76e3d-45be-4adc-a0de-a01281f2aa8b";
+
         public Web web { get; set; }
         public ClientContext ctx { get; set; }
 
@@ -38,7 +40,7 @@ namespace Manage.Job.Utilities
         //protected tbAcc_Stato oStato = null;
 
         // https://stackoverflow.com/questions/49803245/sharepoint-csom-authentication-issue-with-net-core
-        public async Task<string> getContext(string siteUrl)
+        public async Task<string> getContextAsync(string siteUrl)
         {
             string sMsg = string.Empty;
             ctx = null;
@@ -51,14 +53,18 @@ namespace Manage.Job.Utilities
 
                     Helper.ImpersonateUserName = "p.tardiolobonifazi@vivasoft.it";
                     Helper.Pwd = "3KSoHoHFEv7pC5yCe3vN9aCbhpAiRaU+yWhnsLwTK3Lj5fonEsaPmZ1nVtSKrNJSj7ZHho8AaGayrp/VrMmb00r4WiF/tWjPiWQsNLXlzndtzbxYpOW4XTh7hFItLuBd";
+                    string PwdInChiaro = "Enter2017"; // StringCipher.Decrypt(Helper.Pwd, PassPhrase);
                     ctx.AuthenticationMode = ClientAuthenticationMode.Default;
                     //SecureString passWord = new SecureString();
                     //foreach (char c in Helper.Pwd.ToCharArray()) passWord.AppendChar(c);
-                    ctx.Credentials = new Microsoft.SharePoint.Client.SharePointOnlineCredentials(Helper.ImpersonateUserName, Helper.Pwd);
+                    ctx.Credentials = new Microsoft.SharePoint.Client.SharePointOnlineCredentials(Helper.ImpersonateUserName, PwdInChiaro);
 
                     web = ctx.Web;
                     ctx.Load(web);
-                    await ctx.ExecuteQueryAsync();
+
+                    // https://stackoverflow.com/questions/42186888/using-sharepoint-csom-inside-net-core-application
+                    Task spTask = ctx.ExecuteQueryAsync();
+                    await Task.WhenAll(spTask); 
                 }
             }
             catch (Exception ex)
@@ -78,7 +84,7 @@ namespace Manage.Job.Utilities
         }
 
 
-        public async Task<List<tb_Referente>> getReferente(string listIdName, string LoginUserName)
+        public async Task<List<tb_Referente>> getReferenteAsync(string listIdName, string LoginUserName)
         {
             List<tb_Referente> listReferente = null;
             try

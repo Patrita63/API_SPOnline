@@ -19,20 +19,21 @@ namespace Manage.Job.Controllers
 
         // GET: api/SPReferente
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<tb_Referente>>> Get()
+        public async Task<IEnumerable<tb_Referente>> Get()
         {
-            List<tb_Referente> listReferente = null;
+            List<tb_Referente> listRetReferente = null;
+
             string siteUrl = "https://vivasoft.sharepoint.com/";
             string LoginUserName = "Utente";
             Helper.ListaReferenteGuid = "dfc89341-833b-4396-b03b-b8259ea980f7";
             try
             {
                 oSP = new SPHelper();
-                string sRet = await oSP.getContext(siteUrl);
+                string sRet = await oSP.getContextAsync(siteUrl);
 
                 if (string.IsNullOrEmpty(sRet))
                 {
-                    var listRetReferente = oSP.getReferente(Helper.ListaReferenteGuid, LoginUserName);
+                    listRetReferente = await oSP.getReferenteAsync(Helper.ListaReferenteGuid, LoginUserName);
 
                     if (listRetReferente == null)
                     {
@@ -41,7 +42,7 @@ namespace Manage.Job.Controllers
                     else
                     {
                         SeriLogging.LogInformation(LoginUserName, "ok");
-                        // return listRetReferente;
+                        // return (IEnumerable<tb_Referente>)listRetReferente;
                     }
                 }
                 else
@@ -57,7 +58,9 @@ namespace Manage.Job.Controllers
             }
 
             oSP.clearContext();
-            return listReferente;
+            // return (IEnumerable<tb_Referente>)listRetReferente;
+
+            return listRetReferente;
         }
 
         //// GET: api/<SPReferenteController>

@@ -38,7 +38,7 @@ namespace Manage.Job.Utilities
         //protected tbAcc_Stato oStato = null;
 
         // https://stackoverflow.com/questions/49803245/sharepoint-csom-authentication-issue-with-net-core
-        public string getContext(string siteUrl)
+        public async Task<string> getContext(string siteUrl)
         {
             string sMsg = string.Empty;
             ctx = null;
@@ -58,7 +58,7 @@ namespace Manage.Job.Utilities
 
                     web = ctx.Web;
                     ctx.Load(web);
-                    ctx.ExecuteQueryAsync();
+                    await ctx.ExecuteQueryAsync();
                 }
             }
             catch (Exception ex)
@@ -78,16 +78,18 @@ namespace Manage.Job.Utilities
         }
 
 
-        public List<tb_Referente> getReferente(string listIdName, string LoginUserName)
+        public async Task<List<tb_Referente>> getReferente(string listIdName, string LoginUserName)
         {
-            List<tb_Referente> listReferente = new List<tb_Referente>();
+            List<tb_Referente> listReferente = null;
             try
             {
                 List list = web.Lists.GetById(new Guid(listIdName));
                 var q = new CamlQuery() { ViewXml = "<View><Query><Where><Gt><FieldRef Name='ID' /><Value Type='Counter'>0</Value></Gt></Where></Query></View>" };
                 var listData = list.GetItems(q);
                 ctx.Load(listData);
-                // TODO ctx.ExecuteQuery();
+                await ctx.ExecuteQueryAsync();
+
+                listReferente = new List<tb_Referente>();
 
                 foreach (var item in listData)
                 {
@@ -109,6 +111,7 @@ namespace Manage.Job.Utilities
             }
             catch (Exception ex)
             {
+                listReferente = null;
                 string sMsg = string.Format("Source: {0}{3} Message: {1}{3} StackTrace: {2}{3}", ex.Source, ex.Message, ex.StackTrace, System.Environment.NewLine);
                 SeriLogging.LogFatal(LoginUserName, sMsg);
             }

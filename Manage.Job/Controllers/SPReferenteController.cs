@@ -17,9 +17,9 @@ namespace Manage.Job.Controllers
     {
         protected SPHelper oSP = null;
 
-        // GET: api/SPHelper
+        // GET: api/SPReferente
         [HttpGet]
-        public ActionResult<IEnumerable<tb_Referente>> Get()
+        public async Task<ActionResult<IEnumerable<tb_Referente>>> Get()
         {
             List<tb_Referente> listReferente = null;
             string siteUrl = "https://vivasoft.sharepoint.com/";
@@ -27,12 +27,27 @@ namespace Manage.Job.Controllers
             Helper.ListaReferenteGuid = "dfc89341-833b-4396-b03b-b8259ea980f7";
             try
             {
-                listReferente = new List<tb_Referente>();
                 oSP = new SPHelper();
-                oSP.getContext(siteUrl);
-                listReferente = oSP.getReferente(Helper.ListaReferenteGuid, LoginUserName);
+                string sRet = await oSP.getContext(siteUrl);
 
-                SeriLogging.LogInformation(LoginUserName, "ok");
+                if (string.IsNullOrEmpty(sRet))
+                {
+                    var listRetReferente = oSP.getReferente(Helper.ListaReferenteGuid, LoginUserName);
+
+                    if (listRetReferente == null)
+                    {
+                        SeriLogging.LogError(LoginUserName, "listRetReferente == null");
+                    }
+                    else
+                    {
+                        SeriLogging.LogInformation(LoginUserName, "ok");
+                        // return listRetReferente;
+                    }
+                }
+                else
+                {
+                    SeriLogging.LogError(LoginUserName, sRet);
+                }
             }
             catch (Exception ex)
             {
@@ -45,33 +60,33 @@ namespace Manage.Job.Controllers
             return listReferente;
         }
 
-        //// GET: api/<SPManagerController>
+        //// GET: api/<SPReferenteController>
         //[HttpGet]
         //public IEnumerable<string> Get()
         //{
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET api/<SPManagerController>/5
+        // GET api/<SPReferenteController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<SPManagerController>
+        // POST api/<SPReferenteController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<SPManagerController>/5
+        // PUT api/<SPReferenteController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<SPManagerController>/5
+        // DELETE api/<SPReferenteController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

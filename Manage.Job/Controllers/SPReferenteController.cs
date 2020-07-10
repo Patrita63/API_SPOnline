@@ -6,6 +6,7 @@ using ClassLibraryLogging;
 using Manage.Job.Models;
 using Manage.Job.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,9 +24,10 @@ namespace Manage.Job.Controllers
         {
             List<tb_Referente> listRetReferente = null;
 
-            string siteUrl = "https://vivasoft.sharepoint.com/";
+            string siteUrl = Helper.SiteUrlSpOnline; // "https://vivasoft.sharepoint.com/";
             string LoginUserName = "Utente";
-            Helper.ListaReferenteGuid = "dfc89341-833b-4396-b03b-b8259ea980f7";
+
+            // Helper.ListaReferenteGuid = "dfc89341-833b-4396-b03b-b8259ea980f7";
             try
             {
                 oSP = new SPHelper();

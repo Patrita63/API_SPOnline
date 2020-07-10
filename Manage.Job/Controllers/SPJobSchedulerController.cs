@@ -23,9 +23,10 @@ namespace Manage.Job.Controllers
         {
             List<tb_JobScheduler> listRetJobScheduler = null;
 
-            string siteUrl = "https://vivasoft.sharepoint.com/";
+            string siteUrl = Helper.SiteUrlSpOnline; // "https://vivasoft.sharepoint.com/";
             string LoginUserName = "Utente";
-            Helper.ListaReferenteGuid = "43b32e9b-7595-4ebd-a0ca-d2878c85025a";
+
+            // Helper.ListaJobSchedulerGuid = "43b32e9b-7595-4ebd-a0ca-d2878c85025a";
             try
             {
                 oSP = new SPHelper();
@@ -33,7 +34,7 @@ namespace Manage.Job.Controllers
 
                 if (string.IsNullOrEmpty(sRet))
                 {
-                    listRetJobScheduler = await oSP.getJobToScheduleAsync(Helper.ListaReferenteGuid, LoginUserName);
+                    listRetJobScheduler = await oSP.getJobToScheduleAsync(Helper.ListaJobSchedulerGuid, LoginUserName);
 
                     if (listRetJobScheduler == null)
                     {

@@ -23,6 +23,9 @@ namespace Manage.Job.Utilities
         public static string MailPort = "25"; // You can use Port 25 if 587 is blocked
         public static string MailHost = string.Empty;
         public static string MailFrom = string.Empty;
+
+        public static string InfoKey = string.Empty;
+        public static string InfoIv = string.Empty;
     }
 
     //public class JSonAsClassSettings

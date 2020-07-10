@@ -36,8 +36,12 @@ namespace Manage.Job
             Helper.MailPort = this.Configuration.GetSection("AppSettings")["MailPort"];
             Helper.MailHost = this.Configuration.GetSection("AppSettings")["MailHost"];
             Helper.MailFrom = this.Configuration.GetSection("AppSettings")["MailFrom"];
-            
+
             //services.Configure<JSonAsClassSettings>(Configuration.GetSection("appSettings"));
+            services.AddTransient(ec => new EncryptionService(new KeyInfo("45BLO2yoJkvBwz99kBEMlNkxvL40vUSGaqr/WBu3+Vg=", "Ou3fn+I9SVicGWMLkFEgZQ==")));
+
+            Helper.InfoKey = "45BLO2yoJkvBwz99kBEMlNkxvL40vUSGaqr/WBu3+Vg=";
+            Helper.InfoIv = "Ou3fn+I9SVicGWMLkFEgZQ==";
             services.AddControllers();
         }
 

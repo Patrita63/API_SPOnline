@@ -48,18 +48,37 @@ namespace Manage.Job.Utilities
             ctx = null;
             try
             {
+                KeyInfo keyInfo = new KeyInfo(Helper.InfoKey, Helper.InfoIv);
+                EncryptionService oMEPwd = new EncryptionService(keyInfo);
+
+                //var str = "***";
+                //var enc = oMEPwd.Encrypt(str);
+                //var dec = oMEPwd.Decrypt(enc);
+                //string ret = ($"str: {str}, enc: {enc}, dec: {dec}");
+
                 ctx = new ClientContext(siteUrl);
                 {
+                    ctx.AuthenticationMode = ClientAuthenticationMode.Default;
+
+                    //Source: System.Security.Cryptography.Algorithms Message: BlockSize must be 128 in this implementation.
+                    //StackTrace:    at System.Security.Cryptography.RijndaelManaged.set_BlockSize(Int32 value)
+                    //at Manage.Job.Utilities.StringCipher.Decrypt(String cipherText, String passPhrase)
+                    //at Manage.Job.Utilities.SPHelper.getContextAsync(String siteUrl)
+
+                    //SecureString passWord = new SecureString();
+                    //foreach (char c in Helper.Pwd.ToCharArray()) passWord.AppendChar(c);
+
                     //< add key = "ImpersonateUserName" value = "p.tardiolobonifazi@vivasoft.it" />
                     //< add key = "ImpersonatePwd" value = "3KSoHoHFEv7pC5yCe3vN9aCbhpAiRaU+yWhnsLwTK3Lj5fonEsaPmZ1nVtSKrNJSj7ZHho8AaGayrp/VrMmb00r4WiF/tWjPiWQsNLXlzndtzbxYpOW4XTh7hFItLuBd" />
 
-                    Helper.ImpersonateUserName = "p.tardiolobonifazi@vivasoft.it";
-                    Helper.Pwd = "3KSoHoHFEv7pC5yCe3vN9aCbhpAiRaU+yWhnsLwTK3Lj5fonEsaPmZ1nVtSKrNJSj7ZHho8AaGayrp/VrMmb00r4WiF/tWjPiWQsNLXlzndtzbxYpOW4XTh7hFItLuBd";
-                    string PwdInChiaro = "Enter2017"; // StringCipher.Decrypt(Helper.Pwd, PassPhrase);
-                    ctx.AuthenticationMode = ClientAuthenticationMode.Default;
-                    //SecureString passWord = new SecureString();
-                    //foreach (char c in Helper.Pwd.ToCharArray()) passWord.AppendChar(c);
-                    ctx.Credentials = new Microsoft.SharePoint.Client.SharePointOnlineCredentials(Helper.ImpersonateUserName, PwdInChiaro);
+                    //Helper.ImpersonateUserName = "p.tardiolobonifazi@vivasoft.it";
+                    //Helper.ImpersonatePwd = "3KSoHoHFEv7pC5yCe3vN9aCbhpAiRaU+yWhnsLwTK3Lj5fonEsaPmZ1nVtSKrNJSj7ZHho8AaGayrp/VrMmb00r4WiF/tWjPiWQsNLXlzndtzbxYpOW4XTh7hFItLuBd";
+
+                    // https://github.com/dotnet/runtime/issues/895
+                    // .NET Core does not support AES/Rijndael with a block size other than 128
+                    // Helper.Pwd = StringCipher.Decrypt(Helper.ImpersonatePwd, PassPhrase);
+
+                    ctx.Credentials = new SharePointOnlineCredentials(Helper.ImpersonateUserName, oMEPwd.Decrypt(Helper.ImpersonatePwd));
 
                     web = ctx.Web;
                     ctx.Load(web);

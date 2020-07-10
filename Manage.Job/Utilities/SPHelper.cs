@@ -30,6 +30,8 @@ namespace Manage.Job.Utilities
         public ClientContext ctx { get; set; }
 
         protected tb_Referente oReferente = null;
+        protected tb_JobScheduler oJobScheduler = null;
+        protected tb_JobManager oJobManager = null;
 
         //protected tb_Richiedente oRichiedente = null;
         //protected tb_Segnalazione oSegnalazione = null;
@@ -83,7 +85,6 @@ namespace Manage.Job.Utilities
             }
         }
 
-
         public async Task<List<tb_Referente>> getReferenteAsync(string listIdName, string LoginUserName)
         {
             List<tb_Referente> listReferente = null;
@@ -122,6 +123,154 @@ namespace Manage.Job.Utilities
                 SeriLogging.LogFatal(LoginUserName, sMsg);
             }
             return listReferente;
+        }
+
+        public async Task<List<tb_JobScheduler>> getJobToScheduleAsync(string listIdName, string LoginUserName)
+        {
+            List<tb_JobScheduler> listJobScheduler = null;
+            try
+            {
+                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
+                //{
+                //    Web web = ctx.Web;
+                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
+                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><IsNotNull><FieldRef Name='GUID0' /></IsNotNull></Where></Query></View>" };
+                //    var r = list.GetItems(q);
+                //    ctx.Load(r);
+                //    ctx.ExecuteQuery();
+                //}
+
+                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
+                //{
+                //    Web web = ctx.Web;
+                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
+                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                //    var r = list.GetItems(q);
+                //    ctx.Load(r);
+                //    ctx.ExecuteQuery();
+                //}
+
+                List list = web.Lists.GetById(new Guid(listIdName));
+                var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                var listData = list.GetItems(q);
+                ctx.Load(listData);
+                await ctx.ExecuteQueryAsync();
+
+                listJobScheduler = new List<tb_JobScheduler>();
+
+                foreach (var item in listData)
+                {
+                    oJobScheduler = new tb_JobScheduler();
+                    oJobScheduler.ID = Convert.ToInt32(item.FieldValues["ID"].ToString());
+
+                    if (item.FieldValues["GUID0"] != null)
+                        oJobScheduler.GUID = item.FieldValues["GUID0"].ToString();
+
+                    if (item.FieldValues["Nome"] != null)
+                        oJobScheduler.Nome = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Nome"].ToString());
+
+                    if (item.FieldValues["Descrizione"] != null)
+                        oJobScheduler.Descrizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Descrizione"].ToString());
+
+                    if (item.FieldValues["Data_x0020_Evento"] != null)
+                        oJobScheduler.DataEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Evento"].ToString());
+
+                    if (item.FieldValues["Data_x0020_Fine_x0020_Evento"] != null)
+                        oJobScheduler.DataFineEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Evento"].ToString());
+
+                    if (item.FieldValues["Tipo_x0020_Processo"] != null)
+                        oJobScheduler.TipoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Processo"].ToString());
+
+                    if (item.FieldValues["Ripetizione"] != null)
+                        oJobScheduler.Ripetizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Ripetizione"].ToString());
+
+                    if (item.FieldValues["Stato_x0020_Processo"] != null)
+                        oJobScheduler.StatoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Processo"].ToString());
+
+                    listJobScheduler.Add(oJobScheduler);
+                }
+            }
+            catch (Exception ex)
+            {
+                listJobScheduler = null;
+                string sMsg = string.Format("Source: {0}{3} Message: {1}{3} StackTrace: {2}{3}", ex.Source, ex.Message, ex.StackTrace, System.Environment.NewLine);
+                SeriLogging.LogFatal(LoginUserName, sMsg);
+            }
+            return listJobScheduler;
+        }
+
+        public async Task<List<tb_JobManager>> getJobManagerAsync(string listIdName, string LoginUserName)
+        {
+            List<tb_JobManager> listJobManager = null;
+            try
+            {
+                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
+                //{
+                //    Web web = ctx.Web;
+                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
+                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><IsNotNull><FieldRef Name='GUID0' /></IsNotNull></Where></Query></View>" };
+                //    var r = list.GetItems(q);
+                //    ctx.Load(r);
+                //    ctx.ExecuteQuery();
+                //}
+
+                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
+                //{
+                //    Web web = ctx.Web;
+                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
+                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                //    var r = list.GetItems(q);
+                //    ctx.Load(r);
+                //    ctx.ExecuteQuery();
+                //}
+
+                List list = web.Lists.GetById(new Guid(listIdName));
+                var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                var listData = list.GetItems(q);
+                ctx.Load(listData);
+                await ctx.ExecuteQueryAsync();
+
+                listJobManager = new List<tb_JobManager>();
+
+                foreach (var item in listData)
+                {
+                    oJobManager = new tb_JobManager();
+                    oJobManager.ID = Convert.ToInt32(item.FieldValues["ID"].ToString());
+
+                    if (item.FieldValues["GUID0"] != null)
+                        oJobManager.GUID = item.FieldValues["GUID0"].ToString();
+
+                    if (item.FieldValues["Nome"] != null)
+                        oJobManager.Nome = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Nome"].ToString());
+
+                    if (item.FieldValues["Descrizione"] != null)
+                        oJobManager.Descrizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Descrizione"].ToString());
+
+                    if (item.FieldValues["Data_x0020_Evento"] != null)
+                        oJobManager.DataEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Evento"].ToString());
+
+                    if (item.FieldValues["Data_x0020_Fine_x0020_Evento"] != null)
+                        oJobManager.DataFineEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Evento"].ToString());
+
+                    if (item.FieldValues["Tipo_x0020_Processo"] != null)
+                        oJobManager.TipoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Processo"].ToString());
+
+                    if (item.FieldValues["Ripetizione"] != null)
+                        oJobManager.Ripetizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Ripetizione"].ToString());
+
+                    if (item.FieldValues["Stato_x0020_Processo"] != null)
+                        oJobManager.StatoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Processo"].ToString());
+
+                    listJobManager.Add(oJobManager);
+                }
+            }
+            catch (Exception ex)
+            {
+                listJobManager = null;
+                string sMsg = string.Format("Source: {0}{3} Message: {1}{3} StackTrace: {2}{3}", ex.Source, ex.Message, ex.StackTrace, System.Environment.NewLine);
+                SeriLogging.LogFatal(LoginUserName, sMsg);
+            }
+            return listJobManager;
         }
 
     }

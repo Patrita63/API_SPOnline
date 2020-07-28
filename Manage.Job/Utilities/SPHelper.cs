@@ -170,7 +170,7 @@ namespace Manage.Job.Utilities
                 //}
 
                 List list = web.Lists.GetById(new Guid(listIdName));
-                var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Job' /><Value Type='Choice'>Da Pubblicare</Value></Eq></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query></View>" };
                 var listData = list.GetItems(q);
                 ctx.Load(listData);
                 await ctx.ExecuteQueryAsync();
@@ -191,20 +191,136 @@ namespace Manage.Job.Utilities
                     if (item.FieldValues["Descrizione"] != null)
                         oJobScheduler.Descrizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Descrizione"].ToString());
 
-                    if (item.FieldValues["Data_x0020_Evento"] != null)
-                        oJobScheduler.DataEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Evento"].ToString());
+                    if (item.FieldValues["Data_x0020_Inizio_x0020_Job"] != null)
+                        oJobScheduler.DataInizioJob = Convert.ToDateTime(item.FieldValues["Data_x0020_Inizio_x0020_Job"].ToString());
 
-                    if (item.FieldValues["Data_x0020_Fine_x0020_Evento"] != null)
-                        oJobScheduler.DataFineEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Evento"].ToString());
+                    if (item.FieldValues["Data_x0020_Fine_x0020_Job"] != null)
+                        oJobScheduler.DataFineJob = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Job"].ToString());
 
-                    if (item.FieldValues["Tipo_x0020_Processo"] != null)
-                        oJobScheduler.TipoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Processo"].ToString());
+                    if (item.FieldValues["Tipo_x0020_Job"] != null)
+                        oJobScheduler.TipoJob = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Job"].ToString());
 
                     if (item.FieldValues["Ripetizione"] != null)
                         oJobScheduler.Ripetizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Ripetizione"].ToString());
 
-                    if (item.FieldValues["Stato_x0020_Processo"] != null)
-                        oJobScheduler.StatoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Processo"].ToString());
+                    if (item.FieldValues["Stato_x0020_Job"] != null)
+                        oJobScheduler.StatoJob = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Job"].ToString());
+
+                    if (item.FieldValues["Author"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Author"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Autore = childId_Value;
+                    }
+                    
+                    if (item.FieldValues["Created_x0020_Date"] != null)
+                        oJobScheduler.DataCreazione = Convert.ToDateTime(item.FieldValues["Created_x0020_Date"].ToString());
+
+                    if (item.FieldValues["Editor"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Editor"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.AutoreUltimaModifica = childId_Value;
+                    }
+
+                    if (item.FieldValues["Last_x0020_Modified"] != null)
+                        oJobScheduler.DataUltimaModifica = Convert.ToDateTime(item.FieldValues["Last_x0020_Modified"].ToString());
+
+                    if (item.FieldValues["Referente1"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente1"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Referente1Valore = childId_Value;
+                        oJobScheduler.Referente1 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente2"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente2"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Referente2Valore = childId_Value;
+                        oJobScheduler.Referente2 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente3"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente3"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Referente3Valore = childId_Value;
+                        oJobScheduler.Referente3 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente4"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente4"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Referente4Valore = childId_Value;
+                        oJobScheduler.Referente4 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente5"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente5"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobScheduler.Referente5Valore = childId_Value;
+                        oJobScheduler.Referente5 = childId_Id;
+                    }
 
                     listJobScheduler.Add(oJobScheduler);
                 }
@@ -223,28 +339,8 @@ namespace Manage.Job.Utilities
             List<tb_JobManager> listJobManager = null;
             try
             {
-                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
-                //{
-                //    Web web = ctx.Web;
-                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
-                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><IsNotNull><FieldRef Name='GUID0' /></IsNotNull></Where></Query></View>" };
-                //    var r = list.GetItems(q);
-                //    ctx.Load(r);
-                //    ctx.ExecuteQuery();
-                //}
-
-                //using (ClientContext ctx = new ClientContext("https://vivasoft.sharepoint.com"))
-                //{
-                //    Web web = ctx.Web;
-                //    List list = web.Lists.GetById(new Guid("43b32e9b-7595-4ebd-a0ca-d2878c85025a"));
-                //    var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
-                //    var r = list.GetItems(q);
-                //    ctx.Load(r);
-                //    ctx.ExecuteQuery();
-                //}
-
                 List list = web.Lists.GetById(new Guid(listIdName));
-                var q = new CamlQuery() { ViewXml = "<View><Query><Where><And><IsNotNull><FieldRef Name='GUID0' /></IsNotNull><Eq><FieldRef Name='Stato_x0020_Processo' /><Value Type='Choice'>Da Schedulare</Value></Eq></And></Where></Query></View>" };
+                var q = new CamlQuery() { ViewXml = "<View><Query><Where><IsNotNull><FieldRef Name='GUID0' /></IsNotNull></Where></Query></View>" };
                 var listData = list.GetItems(q);
                 ctx.Load(listData);
                 await ctx.ExecuteQueryAsync();
@@ -265,20 +361,136 @@ namespace Manage.Job.Utilities
                     if (item.FieldValues["Descrizione"] != null)
                         oJobManager.Descrizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Descrizione"].ToString());
 
-                    if (item.FieldValues["Data_x0020_Evento"] != null)
-                        oJobManager.DataEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Evento"].ToString());
+                    if (item.FieldValues["Data_x0020_Inizio_x0020_Job"] != null)
+                        oJobManager.DataInizioJob = Convert.ToDateTime(item.FieldValues["Data_x0020_Inizio_x0020_Job"].ToString());
 
-                    if (item.FieldValues["Data_x0020_Fine_x0020_Evento"] != null)
-                        oJobManager.DataFineEvento = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Evento"].ToString());
+                    if (item.FieldValues["Data_x0020_Fine_x0020_Job"] != null)
+                        oJobManager.DataFineJob = Convert.ToDateTime(item.FieldValues["Data_x0020_Fine_x0020_Job"].ToString());
 
-                    if (item.FieldValues["Tipo_x0020_Processo"] != null)
-                        oJobManager.TipoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Processo"].ToString());
+                    if (item.FieldValues["Tipo_x0020_Job"] != null)
+                        oJobManager.TipoJob = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Tipo_x0020_Job"].ToString());
 
                     if (item.FieldValues["Ripetizione"] != null)
                         oJobManager.Ripetizione = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Ripetizione"].ToString());
 
-                    if (item.FieldValues["Stato_x0020_Processo"] != null)
-                        oJobManager.StatoProcesso = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Processo"].ToString());
+                    if (item.FieldValues["Stato_x0020_Job"] != null)
+                        oJobManager.StatoJob = System.Web.HttpUtility.HtmlDecode(item.FieldValues["Stato_x0020_Job"].ToString());
+
+                    if (item.FieldValues["Author"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Author"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Autore = childId_Value;
+                    }
+
+                    if (item.FieldValues["Created_x0020_Date"] != null)
+                        oJobManager.DataCreazione = Convert.ToDateTime(item.FieldValues["Created_x0020_Date"].ToString());
+
+                    if (item.FieldValues["Editor"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Editor"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.AutoreUltimaModifica = childId_Value;
+                    }
+
+                    if (item.FieldValues["Last_x0020_Modified"] != null)
+                        oJobManager.DataUltimaModifica = Convert.ToDateTime(item.FieldValues["Last_x0020_Modified"].ToString());
+
+                    if (item.FieldValues["Referente1"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente1"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Referente1Valore = childId_Value;
+                        oJobManager.Referente1 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente2"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente2"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Referente2Valore = childId_Value;
+                        oJobManager.Referente2 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente3"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente3"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Referente3Valore = childId_Value;
+                        oJobManager.Referente3 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente4"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente4"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Referente4Valore = childId_Value;
+                        oJobManager.Referente4 = childId_Id;
+                    }
+
+                    if (item.FieldValues["Referente5"] != null)
+                    {
+                        //Get Lookup Field - Single Value  
+                        var childIdField = item.FieldValues["Referente5"] as FieldLookupValue;
+                        string childId_Value = string.Empty;
+                        int childId_Id = 0;
+                        if (childIdField != null)
+                        {
+                            childId_Value = childIdField.LookupValue;
+                            childId_Id = childIdField.LookupId;
+                        }
+
+                        oJobManager.Referente5Valore = childId_Value;
+                        oJobManager.Referente5 = childId_Id;
+                    }
 
                     listJobManager.Add(oJobManager);
                 }

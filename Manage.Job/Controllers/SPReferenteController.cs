@@ -43,9 +43,8 @@ namespace Manage.Job.Controllers
             List<tb_Referente> listRetReferente = null;
 
             string siteUrl = Helper.SiteUrlSpOnline; // "https://vivasoft.sharepoint.com/";
-            string LoginUserName = "Utente";
+            string LoginUserName = "Utente";    // TODO 
 
-            // Helper.ListaReferenteGuid = "dfc89341-833b-4396-b03b-b8259ea980f7";
             try
             {
                 oSP = new SPHelper();

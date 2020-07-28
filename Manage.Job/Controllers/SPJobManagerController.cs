@@ -24,9 +24,8 @@ namespace Manage.Job.Controllers
             List<tb_JobManager> listRetJobManager = null;
 
             string siteUrl = Helper.SiteUrlSpOnline; // "https://vivasoft.sharepoint.com/";
-            string LoginUserName = "Utente";
+            string LoginUserName = "Utente";   // TODO
 
-            // Helper.ListaJobManagerGuid = "todo";
             try
             {
                 oSP = new SPHelper();

@@ -181,7 +181,7 @@ namespace Manage.Job.Controllers
                                     }
                                     break;
                                 case "Settimanale":
-                                    numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
+                                    numRipetizioni = getNumRipetizioniSettimanale(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
                                     oJobManager.GUID = item.GUID;
@@ -222,7 +222,7 @@ namespace Manage.Job.Controllers
                                     }
                                     break;
                                 case "Mensile":
-                                    numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
+                                    numRipetizioni = getNumRipetizioniMensile(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
                                     oJobManager.GUID = item.GUID;
@@ -263,7 +263,7 @@ namespace Manage.Job.Controllers
                                     }
                                     break;
                                 case "Annuale":
-                                    numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
+                                    numRipetizioni = getNumRipetizioniAnnuale(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
                                     oJobManager.GUID = item.GUID;

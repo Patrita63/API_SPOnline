@@ -69,9 +69,9 @@ namespace Manage.Job.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET api/<SPJobManagerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<SPJobManagerController>/guid
+        [HttpGet("{guid}")]
+        public string Get(string guid)
         {
             return "value";
         }
@@ -88,9 +88,9 @@ namespace Manage.Job.Controllers
         {
         }
 
-        // DELETE api/<SPJobManagerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<SPJobManagerController>/guid
+        [HttpDelete("{guid}")]
+        public void Delete(string guid)
         {
         }
     }

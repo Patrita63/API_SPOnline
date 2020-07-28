@@ -113,6 +113,7 @@ namespace Manage.Job.Controllers
                             {
                                 case "Singola":
                                     oJobManager = new tb_JobManager();
+                                    oJobManager.GUID = item.GUID;
                                     oJobManager.Nome = item.Nome;
                                     oJobManager.Descrizione = item.Descrizione;
                                     oJobManager.DataInizioJob = item.DataInizioJob;
@@ -142,6 +143,7 @@ namespace Manage.Job.Controllers
                                     numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
+                                    oJobManager.GUID = item.GUID;
                                     oJobManager.Nome = item.Nome;
                                     oJobManager.Descrizione = item.Descrizione;
                                     
@@ -182,6 +184,7 @@ namespace Manage.Job.Controllers
                                     numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
+                                    oJobManager.GUID = item.GUID;
                                     oJobManager.Nome = item.Nome;
                                     oJobManager.Descrizione = item.Descrizione;
 
@@ -222,6 +225,7 @@ namespace Manage.Job.Controllers
                                     numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
+                                    oJobManager.GUID = item.GUID;
                                     oJobManager.Nome = item.Nome;
                                     oJobManager.Descrizione = item.Descrizione;
 
@@ -262,6 +266,7 @@ namespace Manage.Job.Controllers
                                     numRipetizioni = getNumRipetizioniGiornaliera(item.DataInizioJob, item.DataFineJob);
 
                                     oJobManager = new tb_JobManager();
+                                    oJobManager.GUID = item.GUID;
                                     oJobManager.Nome = item.Nome;
                                     oJobManager.Descrizione = item.Descrizione;
 

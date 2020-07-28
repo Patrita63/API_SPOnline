@@ -710,6 +710,8 @@ namespace Manage.Job.Utilities
                 ListItemCreationInformation itemCreateInfo = new ListItemCreationInformation();
                 ListItem newListItem = list.AddItem(itemCreateInfo);
 
+                newListItem["GUID0"] = oJobManager.GUID;
+
                 newListItem["Nome"] = oJobManager.Nome;
                 newListItem["Descrizione"] = oJobManager.Descrizione;
                 newListItem["Data_x0020_Inizio_x0020_Job"] = oJobManager.DataInizioJob.ToString(DateFormat);
